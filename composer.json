@@ -1,0 +1,35 @@
+{
+	"name" : "laragrad/uuid",
+	"description" : "Custom UUID generate and analyze functions",
+	"keywords" : [
+		"laravel",
+		"uuid"
+	],
+	"type" : "package",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Ilya Khondozhko",
+			"email" : "dev@laragrad.com"
+		}
+	],
+	"require" : {
+		"php" : "^7.2.0",
+		"nesbot/carbon" : "^2.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Laragrad\\Uuid\\" : "src"
+		},
+		"files" : [
+			"src/helpers.php"
+		]
+	},
+	"extra" : {
+		"laravel" : {
+			"aliases" : {
+				"LaragradUuid" : "Laragrad\\Uuid\\Support\\Uuid"
+			}
+		}
+	},
+	"minimum-stability" : "dev"
+}
