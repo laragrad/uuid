@@ -2,7 +2,7 @@
 
 ## Description
 
-Package provides any functions to generate and analyze UUID.
+Package provides any functions to generate and analyze UUID with custom structure.
 
 ### Structure of generated UUID
 
