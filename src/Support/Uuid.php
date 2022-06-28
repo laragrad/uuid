@@ -21,24 +21,33 @@ class Uuid
      * @param int $appCode
      * @return string
      */
-    public static function genUuid(int $entityCode = null, int $appCode = null) : string
+    public static function genUuid(int $entityCode = 0, int $appCode = 0)
     {
-        $entityCode = $entityCode ?? 0;
-        $appCode    = $appCode ?? 0;
+        $mt = preg_split("/(\s|\.)/", microtime());
 
-        if ($entityCode > 65535 || $appCode > 4095) {
-            throw new \Exception('genUuid() invalid arguments');
-        }
+        $micro = str_pad(dechex(substr($mt[1], 1, 6)), 5, '0', STR_PAD_LEFT);
 
-        $now = Carbon::now();
+        return
+            str_pad(dechex($mt[2]), 8, '0', STR_PAD_LEFT) . '-' .
+            substr($micro, 0, 4) . '-' . substr($micro, -1) .
+            str_pad(dechex($appCode), 3, '0', STR_PAD_LEFT) . '-' .
+            str_pad(dechex($entityCode), 4, '0', STR_PAD_LEFT) . '-' .
+            static::randomHex(6);
 
-        $micro = self::microHex($now->micro);
+    }
 
-        return  self::timestampHex($now->timestamp).'-'.                                        // S
-                substr($micro, 0, 4).'-'.substr($micro, -1).                                    // U
-                str_pad(dechex($appCode), 3, '0', STR_PAD_LEFT).'-'.                            // A
-                str_pad(dechex($entityCode), 4, '0', STR_PAD_LEFT).'-'.                         // E
-                str_pad(dechex(random_int(0, 65535*65535*65535 - 1)), 12, '0', STR_PAD_LEFT);   // R
+    /**
+     * Generates random Hex-string
+     *
+     * @param $bytes
+     * @return string
+     * @throws \Exception
+     */
+    protected static function randomHex($bytes = 4) {
+        $random = random_bytes(6);
+        $random[0] = pack("C", ord($random[0]) | 1);
+
+        return bin2hex($random);
     }
 
     /**
