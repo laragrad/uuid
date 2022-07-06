@@ -9,7 +9,7 @@ if (! function_exists('gen_uuid')) {
      * @param int $appCode
      * @return string
      */
-    function gen_uuid(int $entityCode = null, int $appCode = null)
+    function gen_uuid(int $entityCode = 0, int $appCode = 0)
     {
         return \Laragrad\Uuid\Support\Uuid::genUuid($entityCode, $appCode);
     }
